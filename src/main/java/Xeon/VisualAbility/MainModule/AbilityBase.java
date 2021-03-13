@@ -8,6 +8,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -17,6 +19,8 @@ import Xeon.VisualAbility.MajorModule.CoolDownTimer;
 import Xeon.VisualAbility.MajorModule.DurationTimer;
 import Xeon.VisualAbility.MajorModule.RestrictionTimer;
 import Xeon.VisualAbility.MinerModule.ACC;
+
+import java.util.Objects;
 
 abstract public class AbilityBase{
 	protected static	CommandManager	cm;
@@ -225,6 +229,7 @@ abstract public class AbilityBase{
 					((CraftWorld)l.getWorld()).getHandle().dimension, packet);
 
 			 */
+			((CraftServer)Bukkit.getServer()).getHandle().sendPacketNearby(null, l.getX(), l.getY(), l.getZ(), 64, ((CraftWorld) Objects.requireNonNull(l.getWorld())).getHandle().getDimensionKey(), packet);
 		}
 	}
 	
