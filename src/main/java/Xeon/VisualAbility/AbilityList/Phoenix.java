@@ -101,13 +101,13 @@ public class Phoenix extends AbilityBase {
 			if(!AbilityUse)
 				Bukkit.broadcastMessage(ChatColor.GREEN+"불사조가 부활하였습니다. 부활 횟수 : "+String.valueOf(ReviveCounter)+"회");
 			
-			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20*30, 0), true);
-			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*30, 0), true);
-			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20*30, 0), true);
-			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*30, 0), true);
-			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 20*30, 0), true);
-			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*30, 0), true);
-			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*30, 0), true);
+			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20*30, 0));
+			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*30, 0));
+			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20*30, 0));
+			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*30, 0));
+			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 20*30, 0));
+			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*30, 0));
+			Event1.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*30, 0));
 			break;
 		}
 	}

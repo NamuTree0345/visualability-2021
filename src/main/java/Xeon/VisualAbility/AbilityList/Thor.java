@@ -38,7 +38,7 @@ public class Thor extends AbilityBase {
 		Player p = Event.getPlayer();
 		World w = p.getWorld();
 		Location loc = p.getTargetBlock(null, 0).getLocation();
-		if(p.getItemInHand().getAmount() >= 32){
+		if(p.getInventory().getItemInMainHand().getAmount() >= 32){
 			w.strikeLightning(loc);
 			w.strikeLightning(loc);
 			w.strikeLightning(loc);
