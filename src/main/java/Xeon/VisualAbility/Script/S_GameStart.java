@@ -11,6 +11,7 @@ import Xeon.VisualAbility.MainModule.EventManager;
 import Xeon.VisualAbility.MajorModule.AbilityList;
 import Xeon.VisualAbility.MinerModule.TimerBase;
 import Xeon.VisualAbility.Script.MainScripter.ScriptStatus;
+import sun.awt.X11.Visual;
 
 public final class S_GameStart {
 	private MainScripter ms;
@@ -116,51 +117,53 @@ public final class S_GameStart {
 	}
 	
 	private void RespawnTeleport(){
-		Location l = ms.gameworld.getSpawnLocation();
-		l.setY(ms.gameworld.getHighestBlockYAt((int)l.getX(), (int)l.getZ()));
-		
-		for(Player p : MainScripter.PlayerList){
-			p.setFoodLevel(20);
-			p.setLevel(0);
-			p.setExhaustion(0.0F);
-			p.setExp(0.0F);
-			p.setHealth(20);
-			p.setSaturation(10.0F);
-			if(!VisualAbility.NoClearInventory)
-				p.getInventory().clear();
-			if(VisualAbility.Respawn){
-				p.teleport(l);
+		Bukkit.getScheduler().runTask(VisualAbility.getPlugin(VisualAbility.class), () -> {
+			Location l = ms.gameworld.getSpawnLocation();
+			l.setY(ms.gameworld.getHighestBlockYAt((int)l.getX(), (int)l.getZ()));
+
+			for(Player p : MainScripter.PlayerList){
+				p.setFoodLevel(20);
+				p.setLevel(0);
+				p.setExhaustion(0.0F);
+				p.setExp(0.0F);
+				p.setHealth(20);
+				p.setSaturation(10.0F);
+				if(!VisualAbility.NoClearInventory)
+					p.getInventory().clear();
+				if(VisualAbility.Respawn){
+					p.teleport(l);
+				}
+				if(VisualAbility.DefaultArmed){
+					p.getInventory().setHelmet(new ItemStack(Material.LEATHER_HELMET, 1));
+					p.getInventory().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE, 1));
+					p.getInventory().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS, 1));
+					p.getInventory().setBoots(new ItemStack(Material.LEATHER_BOOTS, 1));
+					p.getInventory().setItem(0, new ItemStack(Material.WOODEN_SWORD, 1));
+				}
+				else if(!VisualAbility.NoClearInventory){
+					p.getInventory().setHelmet(null);
+					p.getInventory().setChestplate(null);
+					p.getInventory().setLeggings(null);
+					p.getInventory().setBoots(null);
+				}
+				if(VisualAbility.MaxLevelSurvival){
+					p.getInventory().addItem(new ItemStack(Material.ENCHANTED_BOOK, 1));
+					p.getInventory().addItem(new ItemStack(Material.BOOKSHELF, 64));
+					p.setLevel(105);
+				}
 			}
 			if(VisualAbility.DefaultArmed){
-				p.getInventory().setHelmet(new ItemStack(Material.LEATHER_HELMET, 1));
-				p.getInventory().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE, 1));
-				p.getInventory().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS, 1));
-				p.getInventory().setBoots(new ItemStack(Material.LEATHER_BOOTS, 1));
-				p.getInventory().setItem(0, new ItemStack(Material.WOODEN_SWORD, 1));
+				Bukkit.broadcastMessage(ChatColor.GREEN+"기본 무장이 제공됩니다.");
 			}
-			else if(!VisualAbility.NoClearInventory){
-				p.getInventory().setHelmet(null);
-				p.getInventory().setChestplate(null);
-				p.getInventory().setLeggings(null);
-				p.getInventory().setBoots(null);
+			else{
+				Bukkit.broadcastMessage(ChatColor.RED+"기본 무장이 제공되지 않습니다.");
 			}
 			if(VisualAbility.MaxLevelSurvival){
-				p.getInventory().addItem(new ItemStack(Material.ENCHANTED_BOOK, 1));
-				p.getInventory().addItem(new ItemStack(Material.BOOKSHELF, 64));
-				p.setLevel(105);
+				Bukkit.broadcastMessage(ChatColor.GREEN+"만렙 서바이벌 모드입니다. 아이템 제공.");
 			}
-		}
-		if(VisualAbility.DefaultArmed){
-			Bukkit.broadcastMessage(ChatColor.GREEN+"기본 무장이 제공됩니다.");
-		}
-		else{
-			Bukkit.broadcastMessage(ChatColor.RED+"기본 무장이 제공되지 않습니다.");
-		}
-		if(VisualAbility.MaxLevelSurvival){
-			Bukkit.broadcastMessage(ChatColor.GREEN+"만렙 서바이벌 모드입니다. 아이템 제공.");
-		}
-			
-		for(Player p : ms.ExceptionList)
-			p.teleport(l);
+
+			for(Player p : ms.ExceptionList)
+				p.teleport(l);
+		});
 	}
 }

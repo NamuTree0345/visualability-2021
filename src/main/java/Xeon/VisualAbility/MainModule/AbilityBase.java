@@ -130,7 +130,7 @@ abstract public class AbilityBase{
 		return false;
 	}
 	public final boolean PlayerCheck(Entity e){
-		return (e instanceof Player && (Player)e != null && PlayerCheck((Player)e));
+		return e instanceof Player && PlayerCheck((Player) e);
 	}
 	
 	public final boolean ItemCheck(Material item){
